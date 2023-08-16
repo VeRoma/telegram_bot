@@ -1,4 +1,8 @@
 {
     "editor.fontSize": 16,
-    "cSpell.enabled": true
+    "cSpell.enabled": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
 }
