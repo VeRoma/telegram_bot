@@ -1,4 +1,4 @@
-
+import openai
 import json
 import asyncio
 import logging
@@ -14,7 +14,7 @@ from aiogram.utils.markdown import hbold
 file = open('config.json', 'r')
 config = json.load(file)
 
-# # openai.api_key = config['openai']
+openai.api_key = config['openai']
 # bot = Bot(config['token'])
 # dp = Dispatcher(bot)
 
@@ -23,6 +23,18 @@ TOKEN = config['token']
 
 # All handlers should be attached to the Router (or Dispatcher)
 router = Router()
+
+def chatWithGPT(prompt):
+  completion = openai.ChatCompletion.create(
+  model="gpt-3.5-turbo",
+  # model="gpt-4-0314",
+  messages=[
+  {"role": "user", "content": prompt}
+  ]
+  )
+  return completion.choices[0].message.content
+
+
 
 
 @router.message(CommandStart())
@@ -46,8 +58,12 @@ async def echo_handler(message: types.Message) -> None:
     By default, message handler will handle all message types (like a text, photo, sticker etc.)
     """
     try:
-        # Send a copy of the received message
-        await message.send_copy(chat_id=message.chat.id)
+        
+        # answer = 
+        await message.answer(chatWithGPT(message.text))
+        # message.
+        # chatWithGPT(message.text)
+        # await message.send_copy(chat_id=message.chat.id)
     except TypeError:
         # But not all the types is supported to be copied so need to handle it
         await message.answer("Nice try!")

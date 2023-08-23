@@ -12,6 +12,7 @@ def chatWithGPT(prompt):
   {"role": "user", "content": prompt}
   ]
   )
-  return print(completion.choices[0].message.content)
+  return print(1)
+  # return print(completion.choices[0].message.content)
 
 chatWithGPT("Привет! могу ли я общаться с тобой, как с живым человеком?")
