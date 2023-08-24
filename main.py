@@ -26,13 +26,21 @@ router = Router()
 
 def chatWithGPT(prompt):
   completion = openai.ChatCompletion.create(
-  model="gpt-3.5-turbo",
-  # model="gpt-4-0314",
+#   model="gpt-3.5-turbo",
+  model="gpt-4-0314",
   messages=[
   {"role": "user", "content": prompt}
   ]
   )
   return completion.choices[0].message.content
+
+def imageWithGPT(queryPrompt):
+    response = openai.Image.create(
+        prompt = queryPrompt,
+        n=1,
+        size="1024x1024"
+        )
+    return response['data'][0]['url']
 
 
 
@@ -60,7 +68,12 @@ async def echo_handler(message: types.Message) -> None:
     try:
         
         # answer = 
-        await message.answer(chatWithGPT(message.text))
+        # await message.answer(chatWithGPT(message.text))
+
+        
+       
+        await message.answer_photo(imageWithGPT(message.text))
+
         # message.
         # chatWithGPT(message.text)
         # await message.send_copy(chat_id=message.chat.id)
